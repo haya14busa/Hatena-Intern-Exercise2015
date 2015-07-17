@@ -3,7 +3,7 @@ package hatena.intern
 import java.util.TimeZone
 import java.text.SimpleDateFormat
 
-case class Log(host: String, user: String, epoch: Int, req: String, status: Int, size: Int, referer: String) {
+case class Log(host: String, user: Option[String], epoch: Int, req: String, status: Int, size: Int, referer: Option[String]) {
   // xxx Value. Just `val` definitions without `V` suffix suttisfy the
   // requirements but defining them with `def` is more readable I guess
   private val Array(methodV, pathV, protocolV) = this.req.split(" ")
