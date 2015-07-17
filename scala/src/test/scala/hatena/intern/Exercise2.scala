@@ -21,7 +21,8 @@ class Exercise2Spec extends UnitSpec {
     }
 
     it("LTSVファイルが正しくパースされていること") {
-      val logs = LtsvParser.parse("/path/to/sample_data/log.ltsv") // リポジトリ内の`sample_data/log.ltsv`へのパスを指定してください
+      val filePath = (scalax.file.Path(".").toAbsolute.parent.flatMap(_.parent).get / "sample_data" / "log.ltsv").toURI.getRawPath
+      val logs = LtsvParser.parse(filePath)
       logs.size shouldBe 5
 
       // 以降ファイルが正しくLogクラスにパースされているテストを書いてみてください
