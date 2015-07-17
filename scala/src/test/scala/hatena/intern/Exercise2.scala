@@ -18,6 +18,12 @@ class Exercise2Spec extends UnitSpec {
         val expect = Log("127.0.0.1", None, 1372694390, "GET /apache_pb.gif HTTP/1.0", 200, 2326, None)
         LtsvParser.parseLine(line) shouldBe expect
       }
+
+      it("should parse a line with random field order") {
+        val line = "user:-\treferer:-\tepoch:1372694390\thost:127.0.0.1\treq:GET /apache_pb.gif HTTP/1.0\tstatus:200\tsize:2326"
+        val expect = Log("127.0.0.1", None, 1372694390, "GET /apache_pb.gif HTTP/1.0", 200, 2326, None)
+        LtsvParser.parseLine(line) shouldBe expect
+      }
     }
 
     it("LTSVファイルが正しくパースされていること") {
@@ -26,6 +32,10 @@ class Exercise2Spec extends UnitSpec {
       logs.size shouldBe 5
 
       // 以降ファイルが正しくLogクラスにパースされているテストを書いてみてください
+      logs foreach (_.host shouldBe "127.0.0.1")
+
+      // LTSV のパースのテストは `LtsvParser.parseLine` で行い，ここでは正しい
+      // LTSVファイルへのパスを指定したらパースできる程度のテストに留める
     }
 
     it("LTSVファイルが正しくパースできない形式の場合") {
