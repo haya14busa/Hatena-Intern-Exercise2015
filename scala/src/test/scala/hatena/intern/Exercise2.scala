@@ -5,6 +5,21 @@ import hatena.intern.helper._
 class Exercise2Spec extends UnitSpec {
 
   describe("LTSV Parser") {
+
+    describe(".parseLine") {
+      it("should parse one line of valid LTSV") {
+        val line = "host:127.0.0.1\tuser:frank\tepoch:1372694390\treq:GET /apache_pb.gif HTTP/1.0\tstatus:200\tsize:2326\treferer:http://www.hatena.ne.jp/"
+        val expect = Log("127.0.0.1", Some("frank"), 1372694390, "GET /apache_pb.gif HTTP/1.0", 200, 2326, Some("http//www.hatena.ne.jp/"))
+        LtsvParser.parseLine(line) shouldBe expect
+      }
+
+      it("should parse one line of valid LTSV with empty user and referer") {
+        val line = "host:127.0.0.1\tuser:-\tepoch:1372694390\treq:GET /apache_pb.gif HTTP/1.0\tstatus:200\tsize:2326\treferer:-"
+        val expect = Log("127.0.0.1", None, 1372694390, "GET /apache_pb.gif HTTP/1.0", 200, 2326, None)
+        LtsvParser.parseLine(line) shouldBe expect
+      }
+    }
+
     it("LTSVファイルが正しくパースされていること") {
       val logs = LtsvParser.parse("/path/to/sample_data/log.ltsv") // リポジトリ内の`sample_data/log.ltsv`へのパスを指定してください
       logs.size shouldBe 5
