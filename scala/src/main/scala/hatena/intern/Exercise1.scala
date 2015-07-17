@@ -9,6 +9,6 @@ case class Log(host: String, user: String, epoch: Int, req: String, status: Int,
   def path: String = pathV
   def protocol: String = protocolV
 
-  def uri: String = ???
+  def uri: String = s"http://$host$path"
   def time: String = ???
 }
