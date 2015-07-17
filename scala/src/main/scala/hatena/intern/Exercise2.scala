@@ -3,7 +3,8 @@ package hatena.intern
 import scalax.file.Path
 
 object LtsvParser {
-  def parse(filePath: String): Iterable[Log] = ???
+  def parse(filePath: String): Iterable[Log] =
+    Path.fromString(filePath).lines() map parseLine toIterable
 
   def parseLine: String => Log = (mapToLog _) compose (parseLineToMap _)
 
