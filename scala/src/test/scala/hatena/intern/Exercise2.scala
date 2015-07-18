@@ -24,6 +24,12 @@ class Exercise2Spec extends UnitSpec {
         val expect = Log("127.0.0.1", None, 1372694390, "GET /apache_pb.gif HTTP/1.0", 200, 2326, None)
         LtsvParser.parseLine(line) shouldBe expect
       }
+
+      it("should raise appropriate error with invalid LTSV") {
+        val line = "user:-\treferer:-\tepoch:1372694390\thost:127.0.0.1\treq:GET /apache_pb.gif HTTP/1.0\tstatus:200\t"
+        the[LtsvParserException] thrownBy LtsvParser.parseLine(line) should have message "`size` field not found"
+      }
+
     }
 
     it("LTSVファイルが正しくパースされていること") {
@@ -40,6 +46,7 @@ class Exercise2Spec extends UnitSpec {
 
     it("LTSVファイルが正しくパースできない形式の場合") {
       // エラーハンドリングの設計を考えながら、テストを書いてみてください
+      // => `.parseLine` のテストで行う...と思ったけどエラーの行番号ほしいな
     }
 
     it("LTSVファイルが存在しない場合") {

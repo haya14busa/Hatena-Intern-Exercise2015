@@ -2,6 +2,8 @@ package hatena.intern
 
 import scalax.file.Path
 
+class LtsvParserException(message: String) extends RuntimeException(message)
+
 object LtsvParser {
   def parse(filePath: String): Iterable[Log] =
     Path.fromString(filePath).lines() map parseLine toIterable
@@ -14,19 +16,28 @@ object LtsvParser {
     }
 
   // TODO: error handling
+  // [better]: collecting all errors instead of stopping with first error
   private def mapToLog(logMap: Map[String, String]): Log = {
     Log(
-      host = logMap.get("host").get,
-      user = logMap.get("user") flatMap hyphenToOption,
-      epoch = logMap.get("epoch").get.toInt,
-      req = logMap.get("req").get,
-      status = logMap.get("status").get.toInt,
-      size = logMap.get("size").get.toInt,
-      referer = logMap.get("referer") flatMap hyphenToOption
+      host = getOrError(logMap, "host"),
+      user = hyphenToNone(getOrError(logMap, "user")),
+      epoch = getOrError(logMap, "epoch").toInt,
+      req = getOrError(logMap, "req"),
+      status = getOrError(logMap, "status").toInt,
+      size = getOrError(logMap, "size").toInt,
+      referer = hyphenToNone(getOrError(logMap, "referer"))
     )
   }
 
-  private def hyphenToOption(value: String): Option[String] =
+  private def getOrError(logMap: Map[String, String], key: String): String = {
+    val r = logMap.get(key)
+    if (r.isEmpty) {
+      throw new LtsvParserException(s"`$key` field not found")
+    }
+    r.get
+  }
+
+  private def hyphenToNone(value: String): Option[String] =
     if (value == "-") None else Some(value)
 
   /** @return (left, right) right will be empty string if there are no splitter */
