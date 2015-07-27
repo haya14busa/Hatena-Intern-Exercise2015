@@ -4,6 +4,7 @@ import sbt.Keys._
 import sbt._
 
 import scalariform.formatter.preferences._
+import com.github.tkawachi.doctest.DoctestPlugin.doctestSettings
 
 object hatenaInternExerciseBuild extends Build {
   val appName = "hatena-intern-exercise"
@@ -38,6 +39,7 @@ object hatenaInternExerciseBuild extends Build {
       scalacOptions in Test ++= Seq("-Yrangepos")
     ) ++  formatSettings
   ).settings(SbtScalariform.scalariformSettings: _*)
+   .settings(doctestSettings: _*)
 
   lazy val formatSettings = Seq(
     ScalariformKeys.preferences := FormattingPreferences()

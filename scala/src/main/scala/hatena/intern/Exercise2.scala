@@ -8,6 +8,23 @@ object LtsvParser {
   def parse(filePath: String): Iterable[Log] =
     Path.fromString(filePath).lines() map parseLine toIterable
 
+  /**
+   * DOCTEST
+   * {{{
+   * scala> LtsvParser.parseLine(
+   *      |   List(
+   *      |     "host:127.0.0.1",
+   *      |     "user:frank",
+   *      |     "epoch:1372694390",
+   *      |     "req:GET /apache_pb.gif HTTP/1.0",
+   *      |     "status:200",
+   *      |     "size:2326",
+   *      |     "referer:http://www.hatena.ne.jp/"
+   *      |   ).mkString("\t")
+   *      | )
+   * res0: hatena.intern.Log = Log(127.0.0.1,Some(frank),1372694390,GET /apache_pb.gif HTTP/1.0,200,2326,Some(http//www.hatena.ne.jp/))
+   * }}}
+   */
   def parseLine: String => Log = (mapToLog _) compose (parseLineToMap _)
 
   private def parseLineToMap(ltsvLine: String): Map[String, String] =
