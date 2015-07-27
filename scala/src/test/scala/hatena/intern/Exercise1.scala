@@ -1,8 +1,9 @@
 package hatena.intern
 
 import hatena.intern.helper._
+import org.scalatest.DiagrammedAssertions
 
-class Exercise1Spec extends UnitSpec {
+class Exercise1Spec extends UnitSpec with DiagrammedAssertions {
 
   describe("Log class") {
     it("Logクラスのメソッドが正しく実装されている") {
@@ -23,6 +24,7 @@ class Exercise1Spec extends UnitSpec {
       log.uri shouldBe "http://127.0.0.1/apache_pb.gif"
       log.time shouldBe "2013-07-01T15:59:50"
 
+      assert(log.host == "127.0.0.1")
     }
   }
 
