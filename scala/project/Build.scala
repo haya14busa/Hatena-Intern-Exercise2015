@@ -22,7 +22,8 @@ object hatenaInternExerciseBuild extends Build {
         "org.scalatest" %% "scalatest" % "2.2.4" % "test",
         "com.github.scala-incubator.io" %% "scala-io-core" % "0.4.3",
         "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.3",
-        "org.scalaz" %% "scalaz-core" % "7.1.3"
+        "org.scalaz" %% "scalaz-core" % "7.1.3",
+        "org.typelevel" %% "scalaz-scalatest" % "0.2.2" % "test"
         ),
       resolvers ++= Seq(
         "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
