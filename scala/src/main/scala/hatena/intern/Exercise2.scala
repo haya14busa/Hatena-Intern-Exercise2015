@@ -5,6 +5,16 @@ import scalax.file.Path
 class LtsvParserException(message: String) extends RuntimeException(message)
 
 object LtsvParser {
+
+  /** parse a LTSV file
+   * 1. Should I pass File class instead of string path? All this method does
+   *    should be parsing LTSV file, I guess...
+   * 2. Ideally, signature should be more flexible.
+   *    def parse[A](filePath: String): Iterable[A]
+   *    def parse[A](filePath: String)(implicit converter: Map[String, String] => A): Iterable[A]
+   *                                                           ~~~~~~  ~~~~~~
+   *                                                           key     value
+   */
   def parse(filePath: String): Iterable[Log] =
     Path.fromString(filePath).lines() map parseLine toIterable
 
@@ -27,6 +37,8 @@ object LtsvParser {
    */
   def parseLine: String => Log = (mapToLog _) compose (parseLineToMap _)
 
+  //                                                key   : value
+  //                                                ______  ______
   private def parseLineToMap(ltsvLine: String): Map[String, String] =
     ltsvLine.split("\t").map(x => splitFirst(x, ":")).foldLeft(Map[String, String]()) {
       case (m, (field, value)) => m + (field -> value)
