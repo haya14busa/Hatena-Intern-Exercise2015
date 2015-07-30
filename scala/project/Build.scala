@@ -18,7 +18,7 @@ object hatenaInternExerciseBuild extends Build {
       version := appVersion,
       scalaVersion := appScalaVersion,
       libraryDependencies ++= Seq(
-        "joda-time" % "joda-time" % "2.7",
+        "com.github.nscala-time" %% "nscala-time" % "2.0.0",
         "org.scalatest" %% "scalatest" % "2.2.4" % "test",
         "com.github.scala-incubator.io" %% "scala-io-core" % "0.4.3",
         "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.3",
