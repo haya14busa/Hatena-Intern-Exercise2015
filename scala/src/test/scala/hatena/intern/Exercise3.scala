@@ -5,7 +5,7 @@ import hatena.intern.helper._
 class Exercise3Spec extends UnitSpec {
   describe("LTSV Counter") {
 
-    val logs = LtsvParser.parse("/path/to/sample_data/log.ltsv") // リポジトリ内の`sample_data/log.ltsv`へのパスを指定してください
+    val logs = LtsvParser.parse(SpecHelper.pathToDataFile("log.ltsv"))
 
     it("エラー数が正しくカウントされていること") {
       LogCounter(logs).countError shouldBe 2

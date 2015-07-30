@@ -66,7 +66,7 @@ class Exercise2Spec extends UnitSpec with ValidationMatchers with DiagrammedAsse
     describe(".parse") {
 
       it("LTSVファイルが正しくパースされていること") {
-        val filePath = (scalax.file.Path(".").toAbsolute.parent.flatMap(_.parent).get / "sample_data" / "log.ltsv").toURI.getRawPath
+        val filePath = SpecHelper.pathToDataFile("log.ltsv")
         val logs = LtsvParser.parse(filePath)
         logs.size shouldBe 5
 
@@ -84,7 +84,7 @@ class Exercise2Spec extends UnitSpec with ValidationMatchers with DiagrammedAsse
 
       it("LTSVファイルが正しくパースできない形式の場合") {
         // エラーハンドリングの設計を考えながら、テストを書いてみてください
-        val filePath = (scalax.file.Path(".").toAbsolute.parent.flatMap(_.parent).get / "sample_data" / "log.error.ltsv").toURI.getRawPath
+        val filePath = SpecHelper.pathToDataFile("log.error.ltsv")
         the[LtsvParserException] thrownBy LtsvParser.parse(filePath) should have message (
           """at line 0: `user` field not found
             |at line 0: `epoch` is not number
@@ -103,7 +103,7 @@ class Exercise2Spec extends UnitSpec with ValidationMatchers with DiagrammedAsse
 
       describe("LTSVファイルが正しくパースできない形式の場合") {
         it("It shows error line number") {
-          val filePath = (scalax.file.Path(".").toAbsolute.parent.flatMap(_.parent).get / "sample_data" / "log.error.ltsv").toURI.getRawPath
+          val filePath = SpecHelper.pathToDataFile("log.error.ltsv")
           containsErrorMsg(LtsvParser.parseOrError(filePath), List(
             "at line 0: `user` field not found",
             "at line 0: `epoch` is not number",
