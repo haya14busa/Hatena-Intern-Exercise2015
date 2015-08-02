@@ -36,6 +36,12 @@ QUnit.test("`parseLTSVLog` 関数の動作確認", function () {
 
 });
 
+QUnit.test("`parseLTSVLine` 関数の動作確認", function () {
+  var line = 'hoge:hi\tfoo:http://foo.com/'
+  QUnit.deepEqual(parseLtsvLine(line), { hoge: 'hi', foo: 'http://foo.com/' },
+                 'valueに:が含まれていてもok')
+});
+
 QUnit.module("課題 JS-2");
 
 QUnit.test("関数定義の確認", function () {
