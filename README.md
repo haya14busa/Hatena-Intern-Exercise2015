@@ -1,3 +1,39 @@
+:bird: 課題提出 (@haya14busa) :bird:
+====================================
+
+### :paperclip: 課題を行った自分のGitHubのURL :paperclip:
+- https://github.com/haya14busa/Hatena-Intern-Exercise2015
+- 課題 JS-4: http://haya14busa.github.io/Hatena-Intern-Exercise2015/js/js-4/
+
+### :tada: 課題に関して工夫点 :tada:
+
+#### Scala
+- invalidなLTSVをパースする際に最初のエラーで止まらずに，[scalaz](https://github.com/scalaz/scalaz) の `Validation` を使用して全てのエラーを収集して返すようにした
+
+#### JavaScript
+- 副作用のある関数(DOMに書き出すとか)と純粋な関数を分けて実装するよう意識した
+- 課題4 の検索クエリをLTSVのタブをスペースにしたバージョン(LSSV: Label Space Separeted Value) 形式で柔軟に検索できるようにした (`user:frank status:200` など)
+  - GmailとかGitHubの検索みたいな感じ
+
+### :bow: 工夫したかったけど~~他のことしてて時間が足りず~~学業を優先してできなかった点 :bow:
+
+#### Scala
+- LTSVパーサ のパースメソッドの返り値型が今のところ scalaz の `Validation` 型か，エラーがあれば`throw`しちゃって返り値型は`Log`にしてあるが，ライブラリlikeに使うとすればscalazの`Validation`型で返すのは良くないハズなので標準の`Either` 型あたりに変更したい．
+- 現在のLTSVパーサは完全に`Log`クラスありきだけど，任意の`case class`にマッピングしてパースできるようにしたい．
+  - おそらく playframework の JSON からクラスにマッピングするときに使う `Reads converters` みたいなものを用意する必要がありそう
+- 可視化の課題が1つ実装しただけかつ創意工夫点がなさすぎる... :bow:
+  - 工夫点があるとすれば `Log`クラスに依存しないグラフを作成するオブジェクトを別に作成した程度
+
+#### JavaScript
+- LSSV形式のクエリだとスペースが使えない．よって `req:GET /bookmark` は使えないし， `req:GET req:bookmark` としても後ろの`bookmark`で上書きしてしまう．
+- ECMAScript 2015 使いたかったけどtranspileして〜とかが既存のテストと合わせながらとかちょっと面倒そうでやめてしまった．
+- グローバル変数の汚染とかは今回の課題では気にせずにやった．
+
+### :date: 課題にかかった大体の日数 :date:
+- コミットログ的には4日程度
+  - Scala: 3日+α
+  - JavaScript: 1日 
+
 Hatena-Intern-Exercise
 ========================================
 
