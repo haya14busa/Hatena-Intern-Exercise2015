@@ -36,6 +36,7 @@ function parseLtsvLines(ltsv_lines) {
 // target_dom: DOM
 // logs: List[{ path: String, epoch: Int}]
 function createLogTable(target_dom, logs) {
+  removeAllChild(target_dom);
   target_dom.appendChild(createTable(logs));
 }
 
@@ -75,4 +76,12 @@ function createBody(logs) {
     tbody.appendChild(tr);
   }
   return tbody;
+}
+
+function removeAllChild(dom) {
+  var fc = dom.firstChild;
+  while (fc) {
+    dom.removeChild(fc);
+    fc = dom.firstChild;
+  }
 }
