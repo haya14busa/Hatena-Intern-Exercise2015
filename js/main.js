@@ -1,13 +1,13 @@
 // 課題 JS-1: 関数 `parseLTSVLog` を記述してください
 
 function parseLTSVLog(ltsv_lines) {
-  var parsed = parseLtsvLines(ltsv_lines);
-  return parsed.map(function(ltsv) {
-    if ('epoch' in ltsv) {
-      ltsv.epoch = Number(ltsv.epoch);
-    }
-    return ltsv;
-  });
+  return parseLtsvLines(ltsv_lines);
+}
+
+function parseLtsvLines(ltsv_lines) {
+  return ltsv_lines.split('\n')
+    .filter(function(line) { return line !== '' })
+    .map(parseLtsvLine)
 }
 
 function parseLtsvLine(ltsv) {
@@ -18,17 +18,17 @@ function parseLtsvLine(ltsv) {
     var lv_a = lv.split(':');
     var label = lv_a[0];
     var value = lv_a.slice(1).join(':');
+    if (isNumber(value)) {
+      value = Number(value);
+    }
     obj[label] = value;
   }
   return obj;
 }
 
-function parseLtsvLines(ltsv_lines) {
-  return ltsv_lines.split('\n')
-    .filter(function(line) { return line !== '' })
-    .map(parseLtsvLine)
+function isNumber(obj) {
+  return !isNaN(obj)
 }
-
 
 // 課題 JS-2: 関数 `createLogTable` を記述してください
 
