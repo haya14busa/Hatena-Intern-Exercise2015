@@ -13,8 +13,9 @@ case class Log(host: String, user: Option[String], epoch: Int, req: String, stat
   }
   // xxx Value. Just `val` definitions without `V` suffix suttisfy the
   // requirements but defining them with `def` is more readable I guess
-  private val Array(methodV, pathV, protocolV) = this.req.split(" ")
+  private val Array(methodV, pathV, protocolV) = reqs
 
+  // もし mutable なら毎回呼んだほうがよい
   def method: String = methodV
   def path: String = pathV
   def protocol: String = protocolV

@@ -18,7 +18,7 @@ class Exercise3Spec extends UnitSpec with DiagrammedAssertions {
       val franksLogs = groupdLogs.get("frank").get
 
       groupdLogs.get("john").size shouldBe 1
-      groupdLogs.get("guest").size shouldBe 1
+      groupdLogs.get("guest").size shouldBe 1 // <- これOptionなので絶対に1になってる
 
       franksLogs.size shouldBe 3
       // ただしくグルーピングされているかどうかを検査するテストの続きを書いてみてください

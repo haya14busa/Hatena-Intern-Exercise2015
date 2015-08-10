@@ -25,10 +25,11 @@ object LtsvParser {
    *                                                           key     value
    */
   def parseOrError(filePath: String): ValidOrLtsvParserException[Iterable[Log]] = {
-    val path = Path.fromString(filePath)
+    val path = Path.fromString(filePath) // この辺のコードがparseと被ってる(わかる〜)
     if (path.checkAccess(AccessModes.Read))
       parseReadableFile(path).toList.sequenceU
     else
+      // 拡張子をみてもよいかも
       (new LtsvFileNotFoundException(s"${filePath} not found")).failureNel
   }
 
@@ -75,10 +76,11 @@ object LtsvParser {
       ))
     )
 
-  //                                                key   : value
-  //                                                ______  ______
-  private def parseLineToMap(ltsvLine: String): Map[String, String] =
-    ltsvLine.split("\t").map(x => splitFirst(x, ":")).foldLeft(Map[String, String]()) {
+  // type alias つかったほうがよい
+  type Key = String
+  type Value = String
+  private def parseLineToMap(ltsvLine: String): Map[Key, Value] =
+    ltsvLine.split("\t").map(x => splitFirst(x, ":")).foldLeft(Map[Key, Value]()) {
       case (m, (field, value)) => m + (field -> value)
     }
 
