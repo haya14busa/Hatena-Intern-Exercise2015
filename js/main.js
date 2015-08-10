@@ -15,7 +15,7 @@ function parseLtsvLine(ltsv) {
   var lvs = ltsv.split('\t');
   for (var i=0, len=lvs.length; i < len; ++i) {
     var lv = lvs[i];
-    var lv_a = lv.split(':');
+    var lv_a = lv.split(':'); // split(':', 2) でもよい
     var label = lv_a[0];
     var value = lv_a.slice(1).join(':');
     if (isNumber(value)) {
